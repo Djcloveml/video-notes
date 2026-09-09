@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="assets/hero.png" alt="video-notes pipeline" width="1000">
-</p>
-
 <h1 align="center">video-notes</h1>
 
 <p align="center">
@@ -15,12 +11,15 @@
 
 I kept saving knowledge videos on Douyin, YouTube, and Bilibili, and never rewatched any of them. This skill turns each one into a folder of text I can search and skim. A 5-minute video becomes a page I can read in 40 seconds.
 
-## What happens when you paste a link
+## The pipeline
 
-1. The agent picks the cheapest route for the site. On YouTube and Bilibili it grabs the official subtitles when they exist, which is faster and more accurate than speech recognition. On Douyin it uses a no-login direct download. Everything else goes through yt-dlp, which covers about a thousand sites.
-2. If there were no subtitles, the audio is transcribed with Groq's cloud Whisper (free tier, about 8 hours of audio per day, no GPU on your machine).
-3. The agent writes a structured note: what the video claims, the breakdown of each point, and a timeline table with timestamps back into the video.
-4. Everything lands in one folder: `VideoNotes/YYYYMMDD-<topic>/`, with the video, the SRT, the plain text, and the note. Nothing outside that folder is touched.
+```
+link or local file
+  → captions first (YouTube / Bilibili: official subtitles, no ASR)
+  → otherwise download (Douyin direct / yt-dlp) and transcribe (Groq cloud Whisper, free tier)
+  → agent writes a structured note with a timestamped outline
+  → everything lands in VideoNotes/YYYYMMDD-<topic>/  (video + SRT + full text + note)
+```
 
 A real output, from a 5-minute Douyin video about monetizing a personal brand:
 
@@ -34,11 +33,53 @@ VideoNotes/20260907-个人IP变现/
 
 ## Install
 
+One command, powered by the open [skills](https://github.com/vercel-labs/skills) CLI:
+
 ```bash
 npx skills add Djcloveml/video-notes
 ```
 
-Works with Claude Code, Codex, Cursor, Kimi Code, and [75+ other agents](https://github.com/vercel-labs/skills#supported-agents).
+The CLI walks you through picking agents and scope interactively. To skip the prompts:
+
+<details>
+<summary><strong>Claude Code</strong></summary>
+
+```bash
+npx skills add Djcloveml/video-notes --agent claude-code -y
+```
+
+</details>
+
+<details>
+<summary><strong>Kimi Code</strong></summary>
+
+```bash
+npx skills add Djcloveml/video-notes --agent kimi-code -y
+```
+
+</details>
+
+<details>
+<summary><strong>Codex / Cursor / others</strong></summary>
+
+```bash
+npx skills add Djcloveml/video-notes --agent codex -y
+npx skills add Djcloveml/video-notes --agent cursor -y
+```
+
+Full list: [75+ supported agents](https://github.com/vercel-labs/skills#supported-agents).
+
+</details>
+
+Useful flags:
+
+- `-g` — install globally (~ directory), available in every project. Without it, the skill installs into the current project only.
+- `--copy` — copy files instead of symlinking (pick this if you plan to hack on the skill).
+- `-l` — list what's in the repo before installing.
+
+The repo is private while in early development. Until it goes public, installs need GitHub auth on your machine (`gh auth login`, or set `GITHUB_TOKEN`) — the CLI picks it up automatically. After that, the plain command works as-is.
+
+To verify the install, send your agent a video link and say "提取知识点" (or "take notes on this video"). First run starts with a short setup check — see below.
 
 ## First run
 
@@ -88,11 +129,15 @@ video-notes/
 
 我自己囤了太多知识视频——抖音、YouTube、B站——收藏完就再没点开过。这个技能把每个视频变成文字：5 分钟的视频，40 秒读完。
 
-**装**：
+**装**（一行命令，用开源的 skills CLI）：
 
 ```bash
 npx skills add Djcloveml/video-notes
 ```
+
+按提示选 agent 和范围即可。想免交互：`--agent claude-code -y`（Claude Code）或 `--agent kimi-code -y`（Kimi Code），其他 75+ 种 agent 同理换名字。常用选项：`-g` 装到全局（所有项目可用）；`--copy` 复制而不是软链（打算自己改就选它）。仓库公开前需要本机有 GitHub 登录态（`gh auth login` 或 `GITHUB_TOKEN`），CLI 会自动用。
+
+装完发个视频链接说"提取知识点"就能触发；首次运行会先跑环境自检。
 
 **它会做什么**：YouTube 和 B站优先拿官方字幕（比语音识别快也准）；抖音用免登录直链下载；其他网站走 yt-dlp（覆盖上千个站）。没有字幕的视频用 Groq 云端 Whisper 转写（免费额度每天约 8 小时音频，不需要本地 GPU）。最后所有产物收进 `VideoNotes/日期-主题/` 一个文件夹，别的不碰。
 
