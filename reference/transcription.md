@@ -7,7 +7,7 @@ $PY scripts/transcribe_groq.py <video-or-audio-path>          # $PY: see setup.m
 ```
 
 - Video is auto-converted to 16kHz mono mp3 via ffmpeg (fits Groq's 25MB free-tier limit).
-- Outputs `*_字幕.srt` (timestamped) and `*_全文.txt` next to the input file.
+- Outputs `*_transcript.srt` (timestamped) and `*_fulltext.txt` next to the input file.
 - The script itself has zero Python-package dependencies — it shells out to ffmpeg + curl.
 - Free tier ≈ 8 hours of audio per day; beyond that you get HTTP 429 — tell the user plainly, retry tomorrow or use the fallback below.
 

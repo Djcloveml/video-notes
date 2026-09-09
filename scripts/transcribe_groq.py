@@ -6,7 +6,7 @@ Usage:
     python transcribe_groq.py <media_file> [--language zh]
 
 - Input: mp4/mp3/wav/m4a... Video files are auto-converted to 16kHz mono mp3 via ffmpeg.
-- Output: <name>_字幕.srt and <name>_全文.txt next to the input file.
+- Output: <name>_transcript.srt and <name>_fulltext.txt next to the input file.
 - API key: env GROQ_API_KEY, or file ~/.asr/groq_api_key
 - Network: Groq is overseas; tries direct, then local proxies 7897 / 15715.
 
@@ -112,8 +112,8 @@ def main():
         sys.exit("Error: no segments in response")
 
     stem = media.stem
-    srt_path = media.with_name(f"{stem}_字幕.srt")
-    txt_path = media.with_name(f"{stem}_全文.txt")
+    srt_path = media.with_name(f"{stem}_transcript.srt")
+    txt_path = media.with_name(f"{stem}_fulltext.txt")
     with open(srt_path, "w", encoding="utf-8") as f:
         for i, s in enumerate(segs, 1):
             f.write(f"{i}\n{srt_ts(s['start'])} --> {srt_ts(s['end'])}\n{s['text'].strip()}\n\n")

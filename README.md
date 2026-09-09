@@ -24,11 +24,11 @@ link or local file
 A real output, from a 5-minute Douyin video about monetizing a personal brand:
 
 ```
-VideoNotes/20260907-个人IP变现/
-├── jianghushuo.mp4              # 原视频
-├── jianghushuo_字幕.srt         # 201 段，带时间戳
-├── jianghushuo_全文.txt         # 纯文本全文
-└── 姜胡说-每周3小时年入100万_知识点.md   # 章节时间轴 + 分层拆解
+VideoNotes/20260907-personal-brand/
+├── jianghushuo.mp4                    # the original video
+├── jianghushuo_transcript.srt         # 201 segments, timestamped
+├── jianghushuo_fulltext.txt           # plain full text
+└── notes.md                           # timeline table + layered breakdown
 ```
 
 ## Install

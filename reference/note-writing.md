@@ -1,6 +1,6 @@
 # Knowledge-note conventions
 
-Read `*_全文.txt`, consult `*_字幕.srt` for timestamps, and produce `{title}_知识点.md` next to the video.
+Read `*_fulltext.txt`, consult `*_transcript.srt` for timestamps, and produce `{title}_notes.md` in the same folder.
 
 ## Structure
 

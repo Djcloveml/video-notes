@@ -13,7 +13,7 @@ Turn knowledge videos into structured Markdown notes. Full pipeline: acquire →
 - [ ] **1. Acquire the video**: route by source per `reference/acquire.md` (caption-first for YouTube/Bilibili; Douyin direct script; yt-dlp for everything else; browser fallback only if configured)
 - [ ] **2. Transcribe**: `scripts/transcribe_groq.py`, details in `reference/transcription.md`
 - [ ] **3. Write the knowledge note**: the agent writes it; conventions in `reference/note-writing.md`
-- [ ] **4. Store**: everything lives under a `VideoNotes/` folder at the project (or working-directory) root — one subfolder per video: `VideoNotes/YYYYMMDD-<topic>/` holding the video file, `*_字幕.srt`, `*_全文.txt`, and the note. Nothing leaves this folder; no external knowledge base is touched.
+- [ ] **4. Store**: everything lives under a `VideoNotes/` folder at the project (or working-directory) root — one subfolder per video: `VideoNotes/YYYYMMDD-<topic>/` holding the video file, `*_transcript.srt`, `*_fulltext.txt`, and the note. Nothing leaves this folder; no external knowledge base is touched.
 
 ## Conventions
 
