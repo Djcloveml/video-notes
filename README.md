@@ -1,12 +1,19 @@
-<h1 align="center">video-notes</h1>
+# video-notes — video link in, folder of notes out
 
-<p align="center">
-  Drop a video link in the chat. Get back a folder with the subtitles, the full text, and a note you can actually review later.
-</p>
+[![Version](https://img.shields.io/github/v/release/Djcloveml/video-notes?label=version&color=blue)](https://github.com/Djcloveml/video-notes/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/Djcloveml/video-notes.svg?logo=github)](https://github.com/Djcloveml/video-notes/stargazers)
+[![skills.sh](https://skills.sh/b/Djcloveml/video-notes)](https://skills.sh/Djcloveml/video-notes)
 
-<p align="center">
-  <a href="https://skills.sh/Djcloveml/video-notes"><img src="https://skills.sh/b/Djcloveml/video-notes" alt="skills.sh"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT"></a>
+English | [中文](./README_CN.md)
+
+Drop a video link in the chat. Get back a folder with the subtitles, the full text, and a note you can actually review later.
+
+<p>
+  <a href="#install"><strong>Install</strong></a> ·
+  <a href="#the-pipeline"><strong>Pipeline</strong></a> ·
+  <a href="#first-run"><strong>First Run</strong></a> ·
+  <a href="#what-it-wont-do"><strong>Limits</strong></a>
 </p>
 
 I kept saving knowledge videos on Douyin, YouTube, and Bilibili, and never rewatched any of them. This skill turns each one into a folder of text I can search and skim. A 5-minute video becomes a page I can read in 40 seconds.
@@ -120,29 +127,3 @@ video-notes/
 ## License
 
 [MIT](LICENSE).
-
----
-
-## 中文说明
-
-丢一个视频链接进来，还你一个文件夹：字幕、全文、一篇能复习的笔记。
-
-我自己囤了太多知识视频——抖音、YouTube、B站——收藏完就再没点开过。这个技能把每个视频变成文字：5 分钟的视频，40 秒读完。
-
-**装**（一行命令，用开源的 skills CLI）：
-
-```bash
-npx skills add Djcloveml/video-notes
-```
-
-按提示选 agent 和范围即可。想免交互：`--agent claude-code -y`（Claude Code）或 `--agent kimi-code -y`（Kimi Code），其他 75+ 种 agent 同理换名字。常用选项：`-g` 装到全局（所有项目可用）；`--copy` 复制而不是软链（打算自己改就选它）。仓库公开前需要本机有 GitHub 登录态（`gh auth login` 或 `GITHUB_TOKEN`），CLI 会自动用。
-
-装完发个视频链接说"提取知识点"就能触发；首次运行会先跑环境自检。
-
-**它会做什么**：YouTube 和 B站优先拿官方字幕（比语音识别快也准）；抖音用免登录直链下载；其他网站走 yt-dlp（覆盖上千个站）。没有字幕的视频用 Groq 云端 Whisper 转写（免费额度每天约 8 小时音频，不需要本地 GPU）。最后所有产物收进 `VideoNotes/日期-主题/` 一个文件夹，别的不碰。
-
-**首次运行**会检查环境（ffmpeg、Python 虚拟环境、Groq key、yt-dlp，缺什么告诉你装什么），并问一个问题：要不要浏览器兜底。常刷抖音选 (b)——抖音风控几个月变一次，直链挂掉时需要浏览器方案；主要用 YouTube/B站选 (a) 就够了。只问一次，答案会记住。
-
-**它不做什么**：抖音风控变严时直链可能失效（所以留了浏览器兜底）；免费转写有额度；ASR 会有同音错别字（笔记里修明显的，字幕保留原文）；要登录才能看的视频需要你先登录浏览器。
-
-MIT 开源。
