@@ -14,9 +14,9 @@
 
 ## Scenario 3: Fresh machine
 
-- **Input**: on a new machine, "提取这个抖音视频的知识点"
-- **Expected**: run `scripts/setup.sh` first and guide the user through each missing dependency
-- **Checkpoints**: nothing assumed pre-installed; every missing item comes with an install command; the agent waits for the user before continuing
+- **Input**: on a new machine, "提取这个 B站视频的知识点"
+- **Expected**: run `scripts/setup.sh` first; FIRST_RUN block appears → agent relays the a/b/c strategy choice (with pros/cons), records the answer, guides missing dependencies, then proceeds
+- **Checkpoints**: nothing assumed pre-installed; every missing item comes with an install command; the strategy question is asked exactly once (config persists); a second setup.sh run stays silent about onboarding
 
 ## Observation log
 
