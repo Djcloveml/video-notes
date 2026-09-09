@@ -1,0 +1,39 @@
+---
+name: video-notes
+description: "Video knowledge-extraction pipeline: Douyin link / local video / audio → transcript → structured knowledge notes. Use when the user shares a Douyin link or paste-text and asks to extract key points, transcribe subtitles, analyze a video, or take notes (e.g. \"提取知识点\", \"转字幕\", \"做笔记\"), or wants a local video/audio file transcribed and summarized. Transcription defaults to Groq cloud Whisper (free tier); no local GPU required."
+---
+
+# Video Notes: video → transcript → knowledge notes
+
+Turn knowledge videos into structured Markdown notes. Full pipeline: acquire → transcribe → write.
+
+## Workflow checklist (in order, check off as you go)
+
+- [ ] **0. Environment check (first use / any error)**: run `scripts/setup.sh`, then **proactively tell the user what to install** — never assume dependencies exist. Each missing item comes with its install command; wait for the user to fix it before continuing. This is the "first-run" contract: the agent reminds, the user installs.
+- [ ] **1. Acquire the video**: route by source per `reference/acquire.md` (Douyin direct link / local file / yt-dlp)
+- [ ] **2. Transcribe**: `scripts/transcribe_groq.py`, details in `reference/transcription.md`
+- [ ] **3. Write the knowledge note**: the agent writes it; conventions in `reference/note-writing.md`
+- [ ] **4. Deliver**: default = next to the video. **If the user has a personal knowledge base, route the note into it by their conventions** (e.g. an Obsidian vault: capture into its inbox with source link and backlinks). If a dedicated KB skill/tool is installed, defer to its rules for placement and syncing — never invent your own layout inside someone's vault.
+
+## Conventions
+
+- Chinese sites (Douyin etc.): **direct connection, no proxy**. Groq is overseas; the script retries direct → common local proxy ports automatically (configurable via env var).
+- If Groq free tier fails, **say so explicitly** — never silently fall back to a local solution. Only use faster-whisper when the user asks for local transcription (see `reference/transcription.md`).
+- Notes stay faithful to the video; fix obvious ASR homophone errors in the note but never touch the SRT.
+
+## Layout
+
+```
+video-notes/
+├── SKILL.md                  # this file: router
+├── reference/
+│   ├── acquire.md            # per-platform acquisition (incl. Douyin anti-bot fallback)
+│   ├── transcription.md      # transcription details & local fallback
+│   ├── note-writing.md       # note-writing conventions
+│   ├── setup.md              # dependency purposes & install
+│   └── evals.md              # regression scenarios after changes
+└── scripts/
+    ├── setup.sh              # env check + venv creation (execute, don't read)
+    ├── download_douyin.py    # no-login Douyin direct download
+    └── transcribe_groq.py    # Groq cloud transcription (SRT + full text)
+```
