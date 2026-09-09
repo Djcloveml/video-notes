@@ -16,4 +16,4 @@ Read `*_全文.txt`, consult `*_字幕.srt` for timestamps, and produce `{title}
 
 ## Output location
 
-Same directory as the video by default; if the user has a knowledge base (e.g. an Obsidian vault), deliver into it by *their* conventions — inbox capture, backlinks, sync rules all follow the user's KB tooling, not this skill's opinion.
+Everything lives under `VideoNotes/` at the project (or working-directory) root: one subfolder per video, `VideoNotes/YYYYMMDD-<topic>/`, containing the video file, the SRT, the full text, and the note. Self-contained by design — no external knowledge base, no user-home paths.
